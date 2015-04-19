@@ -12,7 +12,10 @@ using System;
 using System.IO;
 using QuaternionSoft.Q3D.UnityPlayer;
 
-public class GenerateVideoButtons : MonoBehaviour {
+
+public class GenerateVideoButtons : MonoBehaviour
+{
+
 	public Transform buttonPrefab;
 	public Transform buttonParent;
 	public GameObject debugPrompt;
@@ -23,7 +26,8 @@ public class GenerateVideoButtons : MonoBehaviour {
 	private Transform[] buttonList; 
 	private Q3DRenderer rendererQ3D;
 	public ScrollRayHandler[] rayHandlerList;
-	void Start () {
+	void Start ()
+	{
 		//Get this script's location
 		string appLocation = Application.dataPath;
 		//Strip off the last part of the file location which corresponds to where this script is
@@ -33,56 +37,58 @@ public class GenerateVideoButtons : MonoBehaviour {
 			appLocation = appLocation.Substring (0, appLocation.Length - "/Assets".Length);
 		}
 		//Get list of .q3d file directories
-		filePaths = Directory.GetFiles(appLocation + "/", "*.q3d");
+		filePaths = Directory.GetFiles (appLocation + "/", "*.q3d");
 		
-		//Start up Q3D prefab
-		UnityEngine.Transform Q3DInstance = (Transform)Instantiate(Q3DPrefab, new Vector3(0, startingY, 0), Quaternion.identity);
-		rendererQ3D = Q3DInstance.GetComponent<Q3DRenderer> ();
+
 		
 		//Make the player inactive to start out with
-		rendererQ3D.gameObject.SetActive (false);
+		//rendererQ3D.gameObject.SetActive (false);
 		//Turn the list into only the filename
-		for (int i=0; i < filePaths.Length; i++){
-			filePaths[i] = filePaths[i].Substring(appLocation.Length);
-			filePaths[i] = filePaths[i].Substring(1, filePaths[i].Length-".q3d".Length-1);
+		for (int i=0; i < filePaths.Length; i++) {
+			filePaths [i] = filePaths [i].Substring (appLocation.Length);
+			filePaths [i] = filePaths [i].Substring (1, filePaths [i].Length - ".q3d".Length - 1);
 		}
 		
 		//make a buttonList for each file
 		buttonList = new Transform[filePaths.Length];
-		ButtonUtil buttonUtil;
+
 		if (filePaths.Length > 0) {
+			ButtonUtil [] buttonUtils = new ButtonUtil[filePaths.Length];
 			for (int i=0; i < filePaths.Length; i++) {
 				//Make buttons from prefab, and plop it in the canvas
 				buttonList [i] = Instantiate (buttonPrefab, new Vector3 (0, -27 * i + 40, -7), Quaternion.identity) as Transform;
 				buttonList [i].SetParent (buttonParent, false);
 				//Configure buttonUtil by giving it the info it needs
 				buttonList [i].gameObject.SetActive (true);
-				buttonUtil = buttonList [i].gameObject.GetComponentInChildren<ButtonUtil> ();
-				buttonUtil.debugPrompt = debugPrompt;
-				buttonUtil.notDebugPrompt = notDebugPrompt;
-				buttonUtil.setMessage (filePaths [i]);
+				buttonUtils [i] = buttonList [i].gameObject.GetComponentInChildren<ButtonUtil> ();
+				buttonUtils [i].debugPrompt = debugPrompt;
+				buttonUtils [i].notDebugPrompt = notDebugPrompt;
+				buttonUtils [i].setMessage (filePaths [i]);
 				//Set the button's on click behavior
-				buttonUtil.setFile (filePaths [i], rendererQ3D);
+				buttonUtils [i].setFile (filePaths [i], Q3DPrefab);
 				
+			}
+			for (int i=0; i < filePaths.Length; i++) {
+				buttonUtils [i].setSiblings (buttonUtils);
 			}
 		} else {
 			//if no files are found, tell the user to put the holographic files into the directory
-			Transform emptyButton = Instantiate (buttonPrefab, new Vector3 (0,40, -7), Quaternion.identity) as Transform;
+			Transform emptyButton = Instantiate (buttonPrefab, new Vector3 (0, 40, -7), Quaternion.identity) as Transform;
 			emptyButton.SetParent (buttonParent, false);
 			emptyButton.gameObject.SetActive (true);
-			buttonUtil = emptyButton.gameObject.GetComponentInChildren<ButtonUtil> ();
+			ButtonUtil buttonUtil = emptyButton.gameObject.GetComponentInChildren<ButtonUtil> ();
 			buttonUtil.setMessage ("No file found. \n Put the holographic files into \n" + appLocation + "\n Then restart this program");
 			print ("no Q3D files found");
 		}
 		
-	//Then we want to give each scrollRayHandler a list of the current buttons
-		if (rayHandlerList != null){
-			foreach( ScrollRayHandler scrollRayHandler in rayHandlerList){
-				scrollRayHandler.populateButtonList(buttonList);
+		//Then we want to give each scrollRayHandler a list of the current buttons
+		if (rayHandlerList != null) {
+			foreach (ScrollRayHandler scrollRayHandler in rayHandlerList) {
+				scrollRayHandler.populateButtonList (buttonList);
 			}
 		}
 	}
-	
+
 }
 /* This file is part of VRtube, Playa.
 

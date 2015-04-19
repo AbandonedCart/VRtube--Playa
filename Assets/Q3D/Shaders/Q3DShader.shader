@@ -41,4 +41,5 @@ Shader "Quaternion/Vertex with color"
 		ENDCG
 		}
 	}
+	Fallback "Transparent/Cutout/VertexLit"
 }
