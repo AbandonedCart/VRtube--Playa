@@ -29,9 +29,15 @@ public class GenerateVideoButtons : MonoBehaviour
 	{
 		//Get this script's location
 		string appLocation = Application.dataPath;
-		//Move one directory up. Usually this is out of Assets or the Data folder
+		//Move up one directory to where the Q3D files should be
 		int endIndex = appLocation.LastIndexOf ("/");
 		appLocation = appLocation.Substring (0, endIndex);
+		if(appLocation.EndsWith(".app"))
+		{
+			//This means we're running on a mac and that we need to move up another directory
+			endIndex = appLocation.LastIndexOf ("/");
+			appLocation = appLocation.Substring (0, endIndex);
+		}
 		//Get list of .q3d file directories
 		filePaths = Directory.GetFiles (appLocation + "/", "*.q3d");
 		
