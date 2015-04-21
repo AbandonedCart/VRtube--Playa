@@ -58,7 +58,7 @@ public class OpeningSequence : MonoBehaviour
 	{
 		if (!hasOpenerBeenRun) {
 
-			if (Input.GetKeyDown ("r")) {
+			if (Input.GetKeyDown ("r") || Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.JoystickButton5)) {
 				print ("Head Synced");
 				//run animation
 				anim.Play ("Opener");
