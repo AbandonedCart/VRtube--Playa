@@ -4,7 +4,6 @@
  */
 //TODO
 //Use pictures instead of buttons
-//Set this up so that we can change the name of the program w/o changing this code
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -30,12 +29,9 @@ public class GenerateVideoButtons : MonoBehaviour
 	{
 		//Get this script's location
 		string appLocation = Application.dataPath;
-		//Strip off the last part of the file location which corresponds to where this script is
-		if (appLocation.Contains ("/VRtube, Playa_Data")) {
-			appLocation = appLocation.Substring (0, appLocation.Length - "/VRtube, Playa_Data".Length);
-		} else if (appLocation.Contains ("/Assets")) {
-			appLocation = appLocation.Substring (0, appLocation.Length - "/Assets".Length);
-		}
+		//Move one directory up. Usually this is out of Assets or the Data folder
+		int endIndex = appLocation.LastIndexOf ("/");
+		appLocation = appLocation.Substring (0, endIndex);
 		//Get list of .q3d file directories
 		filePaths = Directory.GetFiles (appLocation + "/", "*.q3d");
 		
