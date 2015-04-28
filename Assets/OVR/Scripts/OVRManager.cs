@@ -33,6 +33,8 @@ using Ovr;
 /// </summary>
 public class OVRManager : MonoBehaviour
 {
+	[SerializeField] private CameraClearFlags OvrClearFlags = CameraClearFlags.SolidColor;
+
 	/// <summary>
 	/// Contains information about the user's preferences and body dimensions.
 	/// </summary>
@@ -637,7 +639,7 @@ public class OVRManager : MonoBehaviour
 			// Ensure there is a non-RT camera in the scene to force rendering of the left and right eyes.
 			cam = gameObject.AddComponent<Camera>();
 			cam.cullingMask = 0;
-            cam.clearFlags = CameraClearFlags.SolidColor;
+			cam.clearFlags = OvrClearFlags;
             cam.backgroundColor = new Color(0.0f, 0.0f, 0.0f);
 			cam.renderingPath = RenderingPath.Forward;
 			cam.orthographic = true;
