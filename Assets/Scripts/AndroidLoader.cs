@@ -18,6 +18,7 @@ public class AndroidLoader : MonoBehaviour {
 			} else {
 				rendererQ3D.Filename = q3dFiles [0];
 				rendererQ3D.LoadFile (q3dFiles [0]);
+				rendererQ3D.AutoPlay = true;
 			}
 		} else {
 			// TODO: Warn user we have nothing to play
@@ -37,12 +38,16 @@ public class AndroidLoader : MonoBehaviour {
 		rendererQ3D.Filename = path;
 		rendererQ3D.LoadFile (path);
 		audioSource.Play ();
+		rendererQ3D.AutoPlay = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKey (KeyCode.Escape)) {
 			Application.Quit ();
+		}
+		if (rendererQ3D.IsPlaying) {
+			rendererQ3D.AutoPlay = false;
 		}
 	}
 }
