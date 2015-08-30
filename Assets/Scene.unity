@@ -107,6 +107,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b48b4f2b6fef4719a63de7f56ced1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guiPosition: {x: 0, y: -2, z: 1}
+  guiSize: 1
+  useCurvedSurface: 1
+  acceptMouse: 1
+  acceptKeyboard: 1
+  cursorSize: 32
+  customCursor: {fileID: 0}
   audioSource: {fileID: 256443477}
 --- !u!1001 &1584540275
 Prefab:
@@ -125,7 +132,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b58893bb69be2c044804d6370f9af4fe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 2.4289999
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b58893bb69be2c044804d6370f9af4fe, type: 2}
       propertyPath: m_LocalRotation.x
@@ -205,11 +212,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 437896, guid: c64d19f8df8f91c4eae8580f032b3f8e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .787999988
+      value: .75999999
       objectReference: {fileID: 0}
     - target: {fileID: 437896, guid: c64d19f8df8f91c4eae8580f032b3f8e, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1.40600002
+      value: 1.50899994
       objectReference: {fileID: 0}
     - target: {fileID: 437896, guid: c64d19f8df8f91c4eae8580f032b3f8e, type: 2}
       propertyPath: m_LocalRotation.x
